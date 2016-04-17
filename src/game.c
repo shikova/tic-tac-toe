@@ -9,6 +9,8 @@
 void play(SDL_Surface* window)
 {
   int i,j,contuner=1,turne=0;
+  int now=0,ex=0,FPS=60,dt=0;
+  float delta_s=0;
   WinW win;
   SDL_Surface *surface=NULL,*X=NULL,*O=NULL,*blank=NULL,*WIN=NULL;
   int **Tab =NULL;
@@ -44,6 +46,10 @@ void play(SDL_Surface* window)
 
   while (contuner)
   {
+    now =SDL_GetTicks();
+    dt=now-ex;
+    if(dt>FPS)
+{
     SDL_WaitEvent(&event);
     switch (event.type)
      {
@@ -133,7 +139,6 @@ printf("\n" );
     }
 
 
-    SDL_Flip(window);
   win=cheekWin(Tab);
   if (win.winDiago1==1)
   {
@@ -156,7 +161,11 @@ printf("\n" );
     printf("presse space to replay\n");
   }
   SDL_Flip(window);
-
+  ex=now;
+}else
+{
+  SDL_Delay(FPS-dt);
+}
 }
 
   SDL_EnableKeyRepeat(0, 0);
